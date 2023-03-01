@@ -2,13 +2,17 @@ import { defineComponent, reactive, ref } from "vue"
 import styles from './css/index.module.less'
 import hidePassword from '@/assets/images/icons/login/eye-off.svg'
 import showPassword from '@/assets/images/icons/login/eye-on.svg'
-import { showFailToast } from "vant"
+import { showFailToast, showToast } from "vant"
+import { accountLoginApi, codeLoginApi, getCodeApi } from "@/api/common"
+import { codeLoginType } from "@/types/common"
+import { useRouter } from "vue-router"
+import useStore from "@/store"
 
 export default defineComponent({
 
   setup() {
-    const defaultData = reactive({
-      mobile: '',
+    const defaultData: codeLoginType = reactive({
+      mobile: '13230000048',
       password: '',
       code: ''
     })
@@ -18,6 +22,10 @@ export default defineComponent({
     const accountLogin = ref<boolean>(true)
     const formRef = ref<any>(null)
     const codeTime = ref<number>(60)
+    const curCode = ref()
+
+    const router = useRouter()
+    const { user } = useStore()
 
     const clickLeft = (type: string) => {
       console.log(type)
@@ -40,11 +48,37 @@ export default defineComponent({
             codeTime.value--
           }
         }, 1000)
+        const params = {
+          mobile: defaultData.mobile,
+          type: 'login'
+        }
+        const { data } = await getCodeApi(params)
+        if (data.code === 10000) {
+          curCode.value = data.data.code
+          showToast('已发送，请注意查收')
+        }
       }
     }
 
     const submit = async () => {
       await formRef.value.validate()
+      if (!isChecked.value) return showToast('请勾选我同意')
+      if (defaultData.code !== curCode.value) return showToast('验证码错误，请重试')
+
+      const params = {
+        ...defaultData
+      }
+      if (accountLogin.value) {
+        delete params.code
+      } else {
+        delete params.password
+      }
+      const { data } = accountLogin.value ? await accountLoginApi(params) : await codeLoginApi(params)
+      if (data.code === 10000) {
+        router.push('/user')
+        user.setUserInfo(data.data)
+        showToast('登录成功')
+      }
     }
 
     const toggleImg = () => {
@@ -144,7 +178,7 @@ export default defineComponent({
                 <div class='codeBox'>
                   <van-field
                     v-model={defaultData.code}
-                    type='password'
+                    type='text'
                     name="code"
                     label=""
                     placeholder="请输入验证码"
