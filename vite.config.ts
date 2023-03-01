@@ -3,6 +3,11 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import variables from './src/assets/css/variables'
 import vueJSX from '@vitejs/plugin-vue-jsx'
+import px2Vw from 'postcss-px-to-viewport'
+
+const laoder_px2Vw = px2Vw({
+  viewportWidth: 375,
+})
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -41,5 +46,8 @@ export default defineConfig({
         javascriptEnabled: true,
       },
     },
+    postcss: {
+      plugins: [laoder_px2Vw]
+    }
   }
 })

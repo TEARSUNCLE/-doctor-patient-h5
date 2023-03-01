@@ -1,6 +1,6 @@
 
 const themeColor = {
-  'primary-color': '#1183fb'
+  'primary-color': '#16c2a3'
 }
 
 const modifyVars = {

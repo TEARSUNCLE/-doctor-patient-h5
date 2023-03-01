@@ -6,7 +6,7 @@ export default defineComponent({
   render() {
     return (
       <>
-        <div class={`fs20`}>看到这里，项目就启动好了</div>
+        <routerView />
       </>
     )
   }
