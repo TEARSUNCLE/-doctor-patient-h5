@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 export const useUserStore = defineStore('user', {
   state: () => {
     return {
-      userInfo: {}
+      userInfo: {} as userInfoType
     }
   },
 
@@ -21,6 +21,10 @@ export const useUserStore = defineStore('user', {
       if (row) {
         this.userInfo = row
       }
+    },
+
+    layout() {
+      this.userInfo = {}
     }
   }
 })

@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/home',
         name: 'home',
-        component: () => import('@/views/user/index'),
+        component: () => import('@/views/home/index'),
         meta: {
           title: '首页'
         }

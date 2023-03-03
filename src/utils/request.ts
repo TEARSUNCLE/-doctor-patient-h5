@@ -1,6 +1,8 @@
 // import { getToken, hasToken } from '@/utils/storage';
 import { showToast } from 'vant';
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
+import useStore from '@/store';
+const { user } = useStore()
 
 const baseURL = "https://consult-api.itheima.net/"
 const request = axios.create({
@@ -8,11 +10,13 @@ const request = axios.create({
   timeout: 5000,
 })
 
+const token = user.userInfo.token
+
 // 请求拦截
 request.interceptors.request.use((config: AxiosRequestConfig) => {
-  // if (hasToken()) {
-  //   config.headers ? (config.headers.token = `${getToken()}`) : config;
-  // }
+  if (token) {
+    config.headers ? config.headers[`Authorization`] = `Bearer ${token}` : config
+  }
 
   return config
 }, (err) => {

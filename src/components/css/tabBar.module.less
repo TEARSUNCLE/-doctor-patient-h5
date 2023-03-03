@@ -1,7 +1,20 @@
 .tabBarBox {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+
   :global {
     .van-tabbar-item--active {
       color: @primary-color;
+    }
+
+    .van-tabbar--fixed {
+      position: sticky;
+      bottom: 0;
+    }
+
+    .van-tabbar-item {
+      padding-bottom: 5px;
     }
   }
 }
