@@ -2,7 +2,7 @@
   :global {
     .user-page {
       background-color: #f6f7f9;
-      min-height: calc(100vh - 50px);
+      // min-height: calc(100vh - 50px);
 
       .page-head {
         height: 200px;
@@ -18,6 +18,24 @@
 
       .user-order {
         border-radius: 5px;
+
+        .all-order {
+          &:hover {
+            color: #999;
+          }
+        }
+
+        .menu-icon {
+          position: relative;
+
+          span {
+            position: absolute;
+            right: -3px;
+            top: -8px;
+            background-color: #d00000;
+            border-radius: 50%;
+          }
+        }
       }
 
       .user-group {

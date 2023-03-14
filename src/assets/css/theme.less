@@ -5,20 +5,28 @@
 @primary-color: @primary-color; // 全局主色
 
 //气泡提示
-.ant-popover {
-  z-index: 99 !important;
-}
+// .ant-popover {
+//   z-index: 99 !important;
+// }
 
-.setTable /deep/ .ant-table-thead > tr > th, .ant-table-tbody {
+.setTable /deep/ .ant-table-thead>tr>th,
+.ant-table-tbody {
   background: #ffffff;
 }
+
 .setTable /deep/ .ant-table {
   border-radius: 8px;
   padding: 0 25px 25px;
   background: #ffffff;
 }
 
-// 修改toast的样式
+// 修改toast样式
 // .van-toast {
 //   background: var(--van-toast-background-color) !important;
 // }
+
+// 修改divider样式
+.van-divider--hairline::before,
+.van-divider--hairline::after {
+  transform: scaleY(1);
+}

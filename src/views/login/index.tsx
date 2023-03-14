@@ -63,7 +63,7 @@ export default defineComponent({
     const submit = async () => {
       await formRef.value.validate()
       if (!isChecked.value) return showToast('请勾选我同意')
-      if (defaultData.code !== curCode.value) return showToast('验证码错误，请重试')
+      if (!accountLogin.value && defaultData.code !== curCode.value) return showToast('验证码错误，请重试')
 
       const params = {
         ...defaultData

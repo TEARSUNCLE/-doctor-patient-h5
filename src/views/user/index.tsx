@@ -17,10 +17,10 @@ export default defineComponent({
     ])
 
     const orderMenu = ref([
-      { title: '待付款', img: 'paid', key: 'noPaid' },
-      { title: '待发货', img: 'shipped', key: 'Unshipped' },
-      { title: '待收货', img: 'received', key: 'Uncollected' },
-      { title: '已完成', img: 'finished', key: 'finished' },
+      { title: '待付款', img: 'paid', value: 0, key: 'paidNumber' },
+      { title: '待发货', img: 'shipped', value: 0, key: 'shippedNumber' },
+      { title: '待收货', img: 'received', value: 0, key: 'receivedNumber' },
+      { title: '已完成', img: 'finished', value: 0, key: 'finishedNumber' },
     ])
 
     const groupList = ref([
@@ -56,6 +56,14 @@ export default defineComponent({
           for (const key in userInfo.data) {
             if (item.key === key) {
               item.value = userInfo.data[key]
+            }
+          }
+        })
+
+        orderMenu.value.map(item => {
+          for (const key in userInfo.data.orderInfo) {
+            if (item.key === key) {
+              item.value = userInfo.data.orderInfo[key]
             }
           }
         })
@@ -96,6 +104,7 @@ export default defineComponent({
     const { user, handleImgError, menuList, orderMenu, groupList, handleLayout } = this
     return (
       <>
+      {/* <RouterView /> */}
         <div class={styles.userBox}>
           <div class='user-page pl15 pr15'>
             <div class='page-head pl15 pr15'>
@@ -121,12 +130,15 @@ export default defineComponent({
             <div class='user-order bg-ff pl15 pr15 pb15'>
               <div class="head flexWrap pt15 pb15">
                 <h3 class='fs16'>药品订单</h3>
-                <a href="javascript:;" class='fs14 block c-999'>全部订单<van-icon name="arrow" class='ml3' /></a>
+                <a href={'/order'} class='fs14 block c-999 all-order'>全部订单<van-icon name="arrow" class='ml3' /></a>
               </div>
               <div class='row flexWrap pl10 pr10'>
                 {orderMenu.length && orderMenu.map((item, index) => {
                   return <div class='textCenter hand' key={index}>
-                    <img src={'images/icons/user/' + item.img + '.svg'} alt="" width={28} height={28} />
+                    <p class='menu-icon'>
+                      <img src={'images/icons/user/' + item.img + '.svg'} alt="" width={28} height={28} />
+                      <span class='fs12 pl5 pr5 c-fff'>{item.value !== 0 && item.value}</span>
+                    </p>
                     <p class='fs12 pt5'>{item.title}</p>
                   </div>
                 })}
@@ -137,7 +149,7 @@ export default defineComponent({
               <h3 class='fs16 pt12 pb15 pl15 pr15'>快捷工具</h3>
               {groupList.length && groupList.map((item, index) => {
                 return <div key={index} class='pb9'>
-                  <van-cell title={item.title} center icon={"images/icons/user/" + item.img + '.svg'} is-link />
+                  <van-cell title={item.title} center icon={"images/icons/user/" + item.img + '.svg'} is-link to={item.key} />
                 </div>
               })}
             </div>

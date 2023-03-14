@@ -6,7 +6,7 @@ const themeColor = {
 const modifyVars = {
   'c-333': '#333',
   'c-666': '#666',
-  'c-999': '#999',
+  'c-999': '#c3c3c5',
   'c-eee': '#eee',
   'c-ccc': '#ccc',
   'c-fff': '#ffffff',

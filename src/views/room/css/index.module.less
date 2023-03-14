@@ -1,0 +1,123 @@
+.roomOrderBox {
+  height: 100vh;
+  background-color: #f6f7f9;
+
+  :global {
+    .van-nav-bar .van-icon {
+      color: #333;
+      font-size: 18px;
+    }
+
+    .van-nav-bar__text {
+      color: @primary-color;
+      font-size: 15px;
+    }
+
+    .van-nav-bar__title {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .room-status {
+      height: 45px;
+      font-size: 13px;
+
+      .status {
+        color: #16c2a3;
+      }
+    }
+
+    .time-tip {
+      padding: 15px;
+      color: #c3c3c5;
+
+      p {
+        display: inline-block;
+
+        span {
+          padding: 0 16px;
+          display: block;
+          height: 34px;
+          line-height: 34px;
+          background-color: #fff;
+          border-radius: 17px;
+        }
+      }
+    }
+
+    .msg-illness {
+      border-radius: 8px;
+      margin: 15px;
+      padding: 15px;
+
+      .patient {
+        border-bottom: 1px solid #ebedf0;
+      }
+    }
+
+    .msg-tip {
+      padding: 15px;
+      color: #c3c3c5;
+
+      p {
+        padding: 0 16px;
+        height: 34px;
+        line-height: 34px;
+        background-color: #fff;
+        display: inline-block;
+        border-radius: 17px;
+
+        i {
+          color: @primary-color;
+        }
+      }
+    }
+
+    .msg-recipe {
+      padding: 15px;
+
+      .content {
+        border-radius: 8px;
+
+        .head {
+          padding: 15px;
+          border-bottom: 1px solid #ebedf0;
+        }
+
+        .body {
+          padding: 15px;
+        }
+
+        .foot {
+          height: 42px;
+          line-height: 42px;
+          background-color: #eaf8f6;
+
+          span {
+            color: @primary-color;
+          }
+        }
+      }
+    }
+
+    .room-action {
+      position: sticky;
+      left: 0;
+      bottom: 0;
+      height: 60px;
+      padding: 0 16px;
+      z-index: 99;
+
+      .van-cell {
+        padding-left: 0;
+        padding-right: 10px;
+      }
+
+      input {
+        background-color: #f6f7f9;
+        border-radius: 25px;
+        padding: 8px 15px;
+      }
+    }
+  }
+}

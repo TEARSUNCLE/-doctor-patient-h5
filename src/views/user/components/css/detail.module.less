@@ -1,0 +1,151 @@
+.consultDetailBox {
+  height: 100vh;
+  // background-color: #f6f7f9;
+
+  :global {
+    .van-nav-bar .van-icon {
+      color: #333;
+      font-size: 18px;
+    }
+
+    .van-nav-bar__text {
+      color: @primary-color;
+      font-size: 15px;
+    }
+
+    .van-nav-bar__title {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .detail-head {
+      padding: 15px;
+      height: 140px;
+      background: linear-gradient(180deg, rgba(44, 181, 165, 0), rgba(44, 181, 165, .2));
+      border-bottom-left-radius: 40vw 5.33333vw;
+      border-bottom-right-radius: 40vw 5.33333vw;
+
+      .text {
+        padding: 10px 3px;
+
+        span {
+          color: #848484;
+        }
+
+        p {
+          color: #6f6f6f;
+        }
+      }
+
+      .card {
+        padding: 0 15px;
+        height: 74px;
+        border-radius: 8px;
+        box-shadow: 0 0 22px #e5e5e580;
+
+        span:last-child {
+          color: #6f6f6f;
+          font-size: 13px;
+        }
+      }
+    }
+
+    .detail-patient {
+      background-color: #f6f7f9;
+
+      .van-hairline--top-bottom::after,
+      .van-hairline-unset--top-bottom::after {
+        border-width: 0;
+      }
+    }
+
+    .detail-order {
+      .actualPayment {
+        .van-cell__value {
+          color: #eb5757;
+        }
+      }
+
+      .van-cell__value {
+        overflow: clip;
+      }
+
+      .van-cell {
+        line-height: 24px;
+      }
+
+      .orderNo {
+        position: relative;
+
+        .copyBtn {
+          position: absolute;
+          top: 5%;
+          left: 50%;
+          transform: translate(-130%, 0);
+
+          z-index: 9;
+          padding: 2px 10px;
+          background-color: #eaf8f6;
+          color: @primary-color;
+          border: 1px solid @primary-color;
+          border-radius: 12px;
+        }
+      }
+    }
+
+    .foot {
+      position: sticky;
+      left: 0;
+      bottom: 0;
+      height: 60px;
+      z-index: 99;
+
+      .more {
+        color: #6f6f6f;
+        position: relative;
+
+        .popup {
+          top: -93px;
+          left: 0;
+          position: absolute;
+
+          width: 130px;
+          border-radius: 10px;
+          box-shadow: 0 2px 12px #3232331f;
+
+          .check {
+            border-bottom: 1px solid #ebedf0;
+          }
+
+          // 三角形
+          .triangle {
+            position: absolute;
+            bottom: -12px;
+            left: 10px;
+            border: 6px solid;
+            border-color: #fff transparent transparent transparent;
+          }
+        }
+
+        .van-button--normal {
+          border: none;
+          height: 20px;
+        }
+      }
+
+      .btn {
+        background-color: #f6f7f9;
+        padding: 7px 15px;
+        border-radius: 25px;
+        border: 1px solid #f2f3f5;
+        color: #6f6f6f;
+      }
+
+      .other {
+        color: @primary-color;
+        border-color: @primary-color;
+        background-color: #fff;
+      }
+    }
+  }
+}

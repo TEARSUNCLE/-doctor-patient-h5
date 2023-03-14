@@ -1,0 +1,61 @@
+.patientBox {
+
+  :global {
+    .van-nav-bar .van-icon {
+      color: #333;
+      font-size: 18px;
+    }
+
+    .van-nav-bar__text {
+      color: @primary-color;
+      font-size: 15px;
+    }
+
+    .van-nav-bar__title {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .patient-list {
+      padding: 15px;
+
+      .patient-item {
+        position: relative;
+        background-color: #f6f7f9;
+        border-radius: 8px;
+        padding: 15px;
+
+        .info {
+          line-height: 28px;
+        }
+
+        .tag {
+          position: absolute;
+          right: 18%;
+          top: 25%;
+
+          width: 30px;
+          height: 16px;
+          line-height: 16px;
+          text-align: center;
+          background-color: @primary-color;
+          border-radius: 2px;
+          color: #fff;
+          font-size: 10px;
+        }
+      }
+
+      .patient-add {
+        background-color: #f6f7f9;
+        color: @primary-color;
+        border-radius: 8px;
+        padding: 15px 0;
+      }
+
+      .patient-tip {
+        color: #848484;
+        padding: 12px 0;
+      }
+    }
+  }
+}
