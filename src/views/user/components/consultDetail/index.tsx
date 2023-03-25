@@ -4,8 +4,9 @@ import { orderDetailType } from "@/types/patient"
 import { computed, defineComponent, onMounted, reactive, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import styles from '../css/detail.module.less'
-import CopyBoard from "@/components/copyBoard"
+import CopyBoard from "@/components/CopyBoard"
 import { showConfirmDialog, showImagePreview, showToast } from "vant"
+import Navbar from "@/components/Navbar"
 export default defineComponent({
 
   setup() {
@@ -35,7 +36,7 @@ export default defineComponent({
     const patientInfo = computed(() => {
       if (orderDetail.data.patientInfo) {
         const { name, gender, age } = orderDetail.data.patientInfo
-        return `${name} | ${gender === 1 ? '女' : '男'} | ${age}岁`
+        return `${name} | ${gender === 1 ? '男' : '女'} | ${age}岁`
       }
     })
 
@@ -105,12 +106,7 @@ export default defineComponent({
     return (
       <>
         <div class={styles.consultDetailBox}>
-          <van-nav-bar
-            title="问诊详情"
-            left-text=""
-            left-arrow
-            onClickLeft={() => router.back()}
-          />
+          <Navbar title="问诊详情" />
 
           <div class='detail-head'>
             <div class='text'>

@@ -10,3 +10,8 @@ export const getKnowledgeListApi = (params: requestArticleListType) => {
 export const likeApi = (params: { type: string; id: string }) => {
   return request.post(`/like`, params)
 }
+
+/** 首页-关注-医生列表 */
+export const getLikeDocApi = (params: requestArticleListType) => {
+  return request.get(`/home/page/doc`, { params })
+}

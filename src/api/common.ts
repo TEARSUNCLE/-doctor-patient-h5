@@ -15,3 +15,8 @@ export const codeLoginApi = (params: codeLoginType) => {
 export const accountLoginApi = (params: codeLoginType) => {
   return request.post(`login/password`, params)
 }
+
+/** 通用上传 */ 
+export const commonUploadApi = (params: any) => {
+  return request.post(`upload`, params)
+}

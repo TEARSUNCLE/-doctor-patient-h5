@@ -1,18 +1,23 @@
 import { defineComponent, onMounted, reactive, ref } from "vue"
-import styles from '../css/recommend.module.less'
-import LoadData from "@/components/loadData"
+import styles from '../css/common.module.less'
+import LoadData from "@/components/LoadData"
 import { getKnowledgeListApi, likeApi } from "@/api/home"
 import { articleListType } from "@/types/home"
 export default defineComponent({
-
-  setup() {
+  props: {
+    typeKey: {
+      type: String,
+      required: true
+    }
+  },
+  setup(props) {
     const list = ref<articleListType[]>([])
     const otherData = reactive({
       pageTotal: 0,
       total: 0
     })
     const params = reactive({
-      type: 'recommend',
+      type: props.typeKey || 'recommend',
       current: 1,
       pageSize: 10
     })
@@ -23,8 +28,6 @@ export default defineComponent({
         list.value.push(...data.data.rows)
         otherData.pageTotal = data.data.pageTotal
         otherData.total = data.data.total
-
-        console.log(27, list.value)
       }
     }
 
@@ -61,7 +64,7 @@ export default defineComponent({
       <>
         <div class={styles.recommendBox}>
           <ul class='knowledge-list pl15 pr15'>
-            {list.length >= 1 && list.map(item => {
+            {list.length >= 1 ? list.map(item => {
               return <li key={item.id} class={'knowledge-card pt20 pb17'}>
                 <div class='head flexWrap'>
                   <img src={item.creatorAvatar} alt="" width={40} height={40} />
@@ -89,7 +92,8 @@ export default defineComponent({
                   </p>
                 </div>
               </li>
-            })}
+            }) : <van-empty description="暂无数据" />}
+            
             <LoadData listLength={otherData.pageTotal} total={otherData.total} onSetLoadData={loadData} />
           </ul>
         </div>

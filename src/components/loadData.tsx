@@ -26,6 +26,7 @@ export default defineComponent({
       // 元素内容高度
       const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight
 
+      // 把当前页面最高高度保存，避免页面高度降低重复触发
       if (scrollTop + windowHeight > historyHeight.value && scrollTop + windowHeight == scrollHeight) {
         historyHeight.value = scrollTop + windowHeight
         emit('setLoadData', 'loadData')

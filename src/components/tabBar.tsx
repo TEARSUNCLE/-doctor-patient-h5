@@ -1,6 +1,6 @@
 import { defineComponent } from "vue"
 import { RouterView, useRoute } from "vue-router"
-import styles from './css/tabBar.module.less'
+import styles from './css/TabBar.module.less'
 export default defineComponent({
 
   setup() {

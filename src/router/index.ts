@@ -1,5 +1,5 @@
 import { RouteRecordRaw, createWebHistory, createRouter } from 'vue-router'
-import TabBar from '@/components/tabBar'
+import TabBar from '@/components/TabBar'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -88,6 +88,38 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/user/components/patient/index'),
     meta: {
       title: '家庭档案'
+    }
+  },
+  {
+    path: '/consult/fast',
+    name: 'consultFast',
+    component: () => import('@/views/user/components/fast/index'),
+    meta: {
+      title: '极速问诊'
+    }
+  },
+  {
+    path: '/consult/department',
+    name: 'consultDepartment',
+    component: () => import('@/views/user/components/department/index'),
+    meta: {
+      title: '选择科室'
+    }
+  },
+  {
+    path: '/consult/illness',
+    name: 'consultIllness',
+    component: () => import('@/views/user/components/illness/index'),
+    meta: {
+      title: '选择科室'
+    }
+  },
+  {
+    path: '/consult/pay',
+    name: 'consultPay',
+    component: () => import('@/views/user/components/pay/index'),
+    meta: {
+      title: '问诊支付'
     }
   }
 ]

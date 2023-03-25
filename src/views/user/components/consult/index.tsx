@@ -4,27 +4,31 @@ import { consultOrderListType, requestOrderListType } from "@/types/patient"
 import { defineComponent, onMounted, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import styles from '../css/consult.module.less'
-import Pagination from "@/components/pagination"
 import { showConfirmDialog, showImagePreview, showToast } from "vant"
+import LoadData from "@/components/LoadData"
 export default defineComponent({
-
-  setup() {
+  props: {
+    curType: {
+      type: Number,
+      default: 2
+    }
+  },
+  setup(props) {
     const popupShow = ref(false)
     const curModalId = ref('')
-    const router = useRouter()
-
     const orderList = ref<consultOrderListType[]>([])
+
+    const router = useRouter()
 
     const params = reactive<requestOrderListType>({
       current: 1,
       pageSize: 5,
-      type: 2,
+      type: props.curType,
     })
 
     const pageData = reactive({
-      ...params,
-      total: 0,
-      showPageSize: 3
+      listLength: 0,
+      total: 0
     })
 
     const toggleState = (row: consultOrderListType) => {
@@ -37,14 +41,18 @@ export default defineComponent({
     const getOrderList = async () => {
       const { data } = await getOrderListApi(params)
       if (data.code === 10000) {
-        orderList.value = data.data.rows
+        orderList.value.push(...data.data.rows)
         pageData.total = data.data.total
+        pageData.listLength = data.data.pageTotal
       }
     }
 
-    const setLoadFn = (val: number) => {
-      params.current = val
-      getOrderList()
+    // 触底加载更多数据
+    const setLoadData = (type: string) => {
+      if (type) {
+        params.current++
+        getOrderList()
+      }
     }
 
     // 查看处方
@@ -93,7 +101,7 @@ export default defineComponent({
       toggleState,
       orderList,
       pageData,
-      setLoadFn,
+      setLoadData,
       handleBtn,
       getConsultPre,
       derOrderModal,
@@ -108,7 +116,7 @@ export default defineComponent({
       toggleState,
       orderList,
       pageData,
-      setLoadFn,
+      setLoadData,
       handleBtn,
       getConsultPre,
       derOrderModal,
@@ -159,7 +167,7 @@ export default defineComponent({
 
                   <div class='flexBox'>
                     {(item.status === 1 || item.status === 2) && <p class='fs12 btn ml10 hand' onClick={() => handleBtn(item, 'channel')}>取消问诊</p>}
-                    {item.status === 1 && <p class='fs12 btn ml10 hand'>去支付</p>}
+                    {item.status === 1 && <p class='fs12 btn ml10 hand other'>去支付</p>}
 
                     {item.status === 3 && item.prescriptionId && <p class='fs12 btn ml10 hand' onClick={() => handleBtn(item, 'checkPre')}>查看处方</p>}
                     {item.status === 2 || item.status === 3 && <p class='fs12 btn ml10 hand other' onClick={() => { router.push({ name: `/room?orderId=${item.id}`, query: { status: item.status, time: item.createTime } }) }}>继续沟通</p>}
@@ -173,10 +181,9 @@ export default defineComponent({
                 </div>
               </div>
             })}
-            {!orderList.length && <div class='fs14 notData mt15 c-999'>没有更多了</div>}
           </div>
 
-          {orderList.length >= 1 && <Pagination curData={pageData} onSetLoadFn={setLoadFn} />}
+          <LoadData listLength={pageData.listLength} total={pageData.total} onSetLoadData={setLoadData} />
         </div>
       </>
     )

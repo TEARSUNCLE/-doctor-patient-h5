@@ -5,6 +5,7 @@ import { showImagePreview } from "vant"
 import { computed, defineComponent, onMounted, reactive, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import styles from './css/index.module.less'
+import Navbar from "@/components/Navbar"
 export default defineComponent({
 
   setup() {
@@ -37,7 +38,7 @@ export default defineComponent({
     const patientInfo = computed(() => {
       if (orderDetail.data.patientInfo) {
         const { name, gender, age } = orderDetail.data.patientInfo
-        return `${name} ${gender === 1 ? '女' : '男'} ${age}岁`
+        return `${name} ${gender === 1 ? '男' : '女'} ${age}岁`
       }
     })
 
@@ -60,12 +61,7 @@ export default defineComponent({
     return (
       <>
         <div class={styles.roomOrderBox}>
-          <van-nav-bar
-            title="医生问诊室"
-            left-text=""
-            left-arrow
-            onClickLeft={() => router.back()}
-          />
+          <Navbar title="医生问诊室" />
 
           <div class='room-status bg-ff flexWrap pl15 pr15'>
             {orderDetail.data.status === 3 &&

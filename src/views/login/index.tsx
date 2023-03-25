@@ -7,6 +7,7 @@ import { accountLoginApi, codeLoginApi, getCodeApi } from "@/api/common"
 import { codeLoginType } from "@/types/common"
 import { useRouter } from "vue-router"
 import useStore from "@/store"
+import Navbar from "@/components/Navbar"
 
 export default defineComponent({
 
@@ -18,7 +19,7 @@ export default defineComponent({
     })
 
     const isShowPassword = ref<boolean>(true)
-    const isChecked = ref<boolean>(true)
+    const isChecked = ref<boolean>(false)
     const accountLogin = ref<boolean>(true)
     const formRef = ref<any>(null)
     const codeTime = ref<number>(60)
@@ -28,7 +29,7 @@ export default defineComponent({
     const { user } = useStore()
 
     const clickLeft = (type: string) => {
-      console.log(type)
+      console.log(32, type)
     }
 
     const sendCode = async () => {
@@ -128,14 +129,20 @@ export default defineComponent({
     const patternCode = /^[0-9]\d{5}$/
     return (
       <div class={`${styles.loginBox}`}>
-        <van-nav-bar
-          title=""
-          left-text=""
-          right-text="注册"
-          left-arrow
-          onClickLeft={() => clickLeft('')}
-          onClickRight={() => clickLeft('register')}
-        />
+        <Navbar title="" isBack={false} v-slots={{
+          leftText: () => (
+            <>
+              <div onClick={() => clickLeft('')}>
+                <van-icon name="arrow-left" class='mt3' />
+              </div>
+            </>
+          ),
+          rightText: () => (
+            <>
+              <div onClick={() => clickLeft('register')}>注册</div>
+            </>
+          )
+        }} />
 
         <div class='login-head flexBox flexBetweenX flexEndY pt25 pb25 pl30 pr30'>
           <h3 class='fs24 f400'>{accountLogin ? `密码登录` : `验证码登录`}</h3>

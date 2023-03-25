@@ -1,5 +1,5 @@
 import { defineComponent } from "vue"
-import styles from './css/pagination.module.less'
+import styles from './css/Pagination.module.less'
 export default defineComponent({
   props: {
     curData: {

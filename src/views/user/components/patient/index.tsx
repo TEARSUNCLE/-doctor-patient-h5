@@ -1,16 +1,21 @@
 import { createPatientApi, getPatientListApi, updatePatientApi } from "@/api/patient"
+import useStore from "@/store"
 import { createPatientType, patientInfoType } from "@/types/patient"
 import { Desensitize } from "@/utils/common"
 import { showToast } from "vant"
 import { defineComponent, onMounted, reactive, ref } from "vue"
-import { useRouter } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import styles from '../css/patient.module.less'
+import Navbar from "@/components/Navbar"
 export default defineComponent({
 
   setup() {
     const patientList = ref<patientInfoType[]>([])
     const showRight = ref(false)
     const router = useRouter()
+    const route = useRoute()
+    const { consult } = useStore()
+    const curId = ref('')
 
     const modalData = reactive({
       data: {
@@ -69,7 +74,18 @@ export default defineComponent({
       const { data } = await getPatientListApi()
       if (data.code === 10000) {
         patientList.value = data.data
+        curId.value = patientList.value[0].id
       }
+    }
+
+    const toggleItem = (id: string) => {
+      curId.value = id
+    }
+
+    const handleGo = () => {
+      if (!curId.value) return showToast('请选择患者信息')
+      consult.setConsultInfo({ patientId: curId.value })
+      router.push('/consult/pay')
     }
 
     onMounted(() => {
@@ -78,6 +94,7 @@ export default defineComponent({
 
     return {
       router,
+      route,
       showRight,
       showPopup,
       modalData,
@@ -85,24 +102,47 @@ export default defineComponent({
       submit,
       patientList,
       handleEdit,
+      curId,
+      toggleItem,
+      handleGo,
     }
   },
 
   render() {
-    const { router, showRight, showPopup, modalData, toggleGender, submit, patientList, handleEdit } = this
+    const {
+      router,
+      route,
+      showRight,
+      showPopup,
+      modalData,
+      toggleGender,
+      submit,
+      patientList,
+      handleEdit,
+      curId,
+      toggleItem,
+      handleGo,
+    } = this
     return (
       <>
         <div class={styles.patientBox}>
-          <van-nav-bar
-            title="家庭档案"
-            left-text=""
-            left-arrow
-            onClickLeft={() => router.back()}
-          />
+          <Navbar title={route.query.isChange === '1' ? '选择患者' : '家庭档案'} />
+
+          {route.query.isChange === '1' &&
+            <div class='pt15 pb15 pl15 pr15'>
+              <h3 class='fs16 f400 mb5'>请选择患者信息</h3>
+              <p class='fs14' style={{ color: '#6f6f6f' }}>以便医生给出更准确的治疗，信息仅医生可见</p>
+            </div>
+          }
 
           <div class='patient-list fs14'>
-            {patientList.length && patientList.map(item => {
-              return <div class='patient-item fs14 mb15 flexWrap' key={item.id}>
+            {patientList.length >= 1 && patientList.map(item => {
+              return <div
+                class='patient-item fs14 mb15 flexWrap'
+                style={{ backgroundColor: curId === item.id ? '#eaf8f6' : '', border: curId === item.id ? '1px solid #16c2a3' : '' }}
+                key={item.id}
+                onClick={() => toggleItem(item.id)}
+              >
                 <div class='info'>
                   <van-row gutter="20">
                     <van-col span="6" class='fs16' style={{ color: '#121826;' }}>{item.name}</van-col>
@@ -123,19 +163,35 @@ export default defineComponent({
             <div class='patient-tip'>最多可添加 6 人</div>
           </div>
 
+          {route.query.isChange === '1' &&
+            <div class='pl15 pr15 btn'>
+              <van-button type="primary" color='#16c2a3' class='fs16' round block onClick={handleGo}>下一步</van-button>
+            </div>
+          }
+
           {/* 添加档案信息弹窗 */}
           <van-popup
             v-model:show={showRight}
             position="right"
             style={{ width: '100%', height: '100%' }}
           >
-            <van-nav-bar
-              title="家庭档案"
-              left-text=""
-              right-text="保存"
-              left-arrow
-              onClickLeft={() => showPopup(false)}
-              onClickRight={submit}
+            <Navbar
+              title="添加患者"
+              isBack={false}
+              v-slots={{
+                leftText: () => (
+                  <>
+                    <div onClick={() => showPopup(false)}>
+                      <van-icon name="arrow-left" class='mt3' />
+                    </div>
+                  </>
+                ),
+                rightText: () => (
+                  <>
+                    <p onClick={submit}>保存</p>
+                  </>
+                )
+              }}
             />
             <div class='form'>
               <van-form>

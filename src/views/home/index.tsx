@@ -1,13 +1,17 @@
 import { defineComponent, ref } from "vue"
 import styles from './css/index.module.less'
-import RecommendComponent from "./components/recommend"
+import CommonComponent from "./components/common"
+import LikeComponent from "./components/like"
+import { useRouter } from "vue-router"
 export default defineComponent({
 
   setup() {
-    const activeKey = ref(1)
+    const router = useRouter()
+    const activeKey = ref('recommend')
+    const isActive = ref(true)
     const topRow = ref([
       { img: 'doctor', title: '问医生', desc: '按科室查问医生' },
-      { img: 'graphic', title: '极速问诊', desc: '20s医生极速回复' },
+      { img: 'graphic', title: '极速问诊', desc: '20s医生极速回复', path: 'consult/fast' },
       { img: 'prescribe', title: '开药门诊', desc: '线上买药更方便' }
     ])
     const rowList = ref([
@@ -17,15 +21,25 @@ export default defineComponent({
       { img: 'find', title: '疾病查询' }
     ])
 
+    const toggleTab = (row: { name: string }) => {
+      if (row) {
+        isActive.value = false
+        activeKey.value = row.name
+      }
+    }
+
     return {
       topRow,
       rowList,
       activeKey,
+      toggleTab,
+      isActive,
+      router,
     }
   },
 
   render() {
-    const { topRow, rowList, activeKey } = this
+    const { topRow, rowList, activeKey, toggleTab, isActive, router } = this
     return (
       <>
         <div class={styles.homeBox}>
@@ -42,7 +56,7 @@ export default defineComponent({
             <div class='top-row pt10 pb10'>
               <van-row gutter="20">
                 {topRow.length && topRow.map((item, index) => {
-                  return <van-col span="8" class='textCenter hand' key={index}>
+                  return <van-col span="8" class='textCenter hand' key={index} onClick={() => router.push('/' + item.path)}>
                     <img src={`/images/icons/home/${item.img}.svg`} alt="" width={48} />
                     <p class='fs14 title f500 mt5' style={{ color: '#121826' }}>{item.title}</p>
                     <p class='fs12 desc mt2' style={{ color: '#848484' }}>{item.desc}</p>
@@ -50,7 +64,7 @@ export default defineComponent({
                 })}
               </van-row>
             </div>
-            <div class='row pt10 pb10'>
+            <div class='row pt5 pb5'>
               <van-row gutter="20">
                 {rowList.length && rowList.map((item, index) => {
                   return <van-col span="6" class='textCenter hand' key={index}>
@@ -74,13 +88,20 @@ export default defineComponent({
           </div>
 
           <div class='home-tabs'>
-            <van-tabs v-model:active={activeKey} shrink>
-              <van-tab title="关注">内容 1</van-tab>
-              <van-tab title="推荐">
-                <RecommendComponent />
+            <van-tabs v-model={[activeKey, isActive ? 'active' : 'active']} shrink onClickTab={toggleTab}>
+              <van-tab title="关注" name='like'>
+                <LikeComponent typeKey={activeKey} />
+                <CommonComponent typeKey={activeKey} />
               </van-tab>
-              <van-tab title="减脂">内容 3</van-tab>
-              <van-tab title="饮食">内容 4</van-tab>
+              <van-tab title="推荐" name='recommend'>
+                <CommonComponent typeKey={activeKey} />
+              </van-tab>
+              <van-tab title="减脂" name='fatReduction'>
+                <CommonComponent typeKey={activeKey} />
+              </van-tab>
+              <van-tab title="饮食" name='food'>
+                <CommonComponent typeKey={activeKey} />
+              </van-tab>
             </van-tabs>
           </div>
         </div>

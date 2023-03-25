@@ -90,7 +90,7 @@ export interface createPatientType {
 	defaultFlag: number;
 	gender?: number;
 	id?: string;
-	genderValue?:string;
+	genderValue?: string;
 	age?: number
 }
 
@@ -103,4 +103,57 @@ export interface patientInfoType {
 	genderValue: string;
 	age: number;
 	id: string;
+}
+
+/** 找医生-科室 */
+export interface depType {
+	id: string;
+	name: string;
+	child: Child[];
+}
+export interface Child {
+	id: string;
+	name: string;
+	avatar: string;
+}
+
+/** 问诊-支付请求参数 */
+export interface requestOrderPreType {
+	type?: number;
+	illnessType?: number;
+	useCoupon?: string;
+	couponId?: string;
+	docId?: string;
+	patientId?: string;
+	depId?: string;
+}
+
+/** 优惠券 */
+export interface couponInfoType {
+	payment: number;
+	couponDeduction: number;
+	couponId?: any;
+	pointDeduction: number;
+	actualPayment: number;
+}
+
+/** 图文问诊-疾病信息 */
+export interface setIllnessType {
+	illnessDesc: string;
+	illnessTime: number | undefined;
+	consultFlag: number | undefined;
+	pictures: any[];
+}
+
+/** 问诊-构建订单参数 */
+export interface buildOrderData {
+	illnessDesc: string;
+	illnessTime: number | undefined;
+	consultFlag: number | undefined;
+	pictures: any[];
+	patientId: string | undefined;
+	type: number;
+	illnessType: number;
+	depId: string;
+	couponId: string | null;
 }

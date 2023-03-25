@@ -1,7 +1,9 @@
 import { useUserStore } from './module/user';
+import { useConsultStore } from './module/consult'
 const useStore = () => {
   return {
-    user: useUserStore()
+    user: useUserStore(),
+    consult: useConsultStore()
   }
 }
 

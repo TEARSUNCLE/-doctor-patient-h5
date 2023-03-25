@@ -1,0 +1,70 @@
+.illnessBox {
+  :global {
+    .illness-tip {
+      position: relative;
+      padding: 15px;
+
+      .info {
+        .tip {
+          padding: 12px;
+          background-color: #f6f7f9;
+          color: #6f6f6f;
+          font-size: 13px;
+          align-items: flex-start;
+        }
+      }
+
+      &::after {
+        content: " ";
+        position: absolute;
+        box-sizing: border-box;
+        pointer-events: none;
+        top: -50%;
+        right: -50%;
+        bottom: -50%;
+        left: -50%;
+        border: 0 solid #ebedf0;
+        transform: scale(.5);
+        border-bottom-width: 1px;
+      }
+    }
+
+    .illness-form {
+      .itemBox {
+        p {
+          color: #6f6f6f;
+        }
+
+        .item {
+          height: 32px;
+          line-height: 30px;
+          min-width: 60px;
+          padding: 0 14px;
+          background-color: #f6f7f9;
+          border: 1px solid #f6f7f9;
+          color: #3c3e42;
+          border-radius: 4px;
+        }
+      }
+
+      .upload-wrapper {
+
+        .van-uploader__upload {
+          border-radius: 8px;
+        }
+
+        .van-uploader__upload-icon {
+          color: #6f6f6f;
+        }
+      }
+    }
+
+    .van-cell {
+      padding: 0;
+    }
+
+    .van-button {
+      border-radius: 30px;
+    }
+  }
+}
