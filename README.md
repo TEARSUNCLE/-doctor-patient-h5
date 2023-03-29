@@ -8,10 +8,16 @@ vue3 + jsx + ts + vite2 + vantUi + pinia
 pnpm
 
 # 安装
+```
 git clone + url
+```
 
 # 安装依赖
+```
 pnpm i or yarn
+```
 
 # 启动项目
+```
 yarn dev
+```
