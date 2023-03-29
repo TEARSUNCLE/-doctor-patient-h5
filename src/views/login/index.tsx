@@ -8,6 +8,7 @@ import { codeLoginType } from "@/types/common"
 import { useRouter } from "vue-router"
 import useStore from "@/store"
 import Navbar from "@/components/Navbar"
+import { setToken } from "@/utils/storage"
 
 export default defineComponent({
 
@@ -78,6 +79,7 @@ export default defineComponent({
       if (data.code === 10000) {
         router.push('/user')
         user.setUserInfo(data.data)
+        setToken(data.data.token)
         showToast('登录成功')
       }
     }

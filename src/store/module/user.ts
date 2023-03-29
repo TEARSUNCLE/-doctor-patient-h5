@@ -1,3 +1,4 @@
+import { clearToken } from '@/utils/storage'
 import { userInfoType } from '@/types/user'
 import { defineStore } from 'pinia'
 
@@ -25,6 +26,7 @@ export const useUserStore = defineStore('user', {
 
     layout() {
       this.userInfo = {}
+      clearToken()
     }
   }
 })

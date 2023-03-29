@@ -109,7 +109,7 @@ export default defineComponent({
           <div class='user-page pl15 pr15'>
             <div class='page-head pl15 pr15'>
               <div class='top flexBox aiCenter pt50'>
-                <img src={user.userInfo.avatar} alt="" onError={handleImgError} width={70} height={70} />
+                <img src={user.userInfo.avatar} alt="" onError={handleImgError} width={70} height={70} class='bg-ff' />
                 <div class='ml13'>
                   <p class='f500 fs18'>{user.userInfo.account}</p>
                   <p class='f500 fs18 pt5'>
